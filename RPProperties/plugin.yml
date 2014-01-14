@@ -1,0 +1,17 @@
+name: RP-Properties
+main: net.swordsofvalor.rpproperties
+version: 0.1
+author: Nerdic Viking
+website: http://swordsofvalor.net/RPProperties
+
+commands:
+    propertycreate:
+        description: Creates a new property
+        usage: /<command> [name] [price]
+        permission: RPProperties.create
+        permission-message: You aren't authorized to create properties!
+    propertydelete:
+        description: Deletes a property
+        usage: /<command> [name]
+        permission: RPProperties.delete
+        permission-message: You aren't authorized to delete properties!
