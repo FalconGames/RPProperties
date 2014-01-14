@@ -1,9 +1,12 @@
 package net.swordsofvalor.rpproperties;
 
+import java.io.Serializable;
+
 import org.bukkit.entity.Player;
 
-public class Property {
+public class Property implements Serializable{
 
+	private static final long serialVersionUID = 2360353302086494078L;
 	String name;
 	int x, y, z, width, height, length;
 	float price;
@@ -21,6 +24,7 @@ public class Property {
 		this.height = y > height ? height : y;
 		this.length = z > length ? length : z;
 		this.price = price;
+		RPProperties.getInstance().save();
 	}
 	
 	public boolean checkBound(Player p){

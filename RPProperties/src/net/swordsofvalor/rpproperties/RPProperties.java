@@ -1,5 +1,9 @@
 package net.swordsofvalor.rpproperties;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Logger;
@@ -14,7 +18,6 @@ import org.bukkit.permissions.Permission;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
-import org.bukkit.configuration.serialization.*;
 
 public class RPProperties extends JavaPlugin{
 
@@ -88,6 +91,32 @@ public class RPProperties extends JavaPlugin{
     }
 	
 	private void initProperties() {
+	
+		try{
+			FileInputStream fileIn = new FileInputStream("properties.xml");
+			ObjectInputStream in = new ObjectInputStream(fileIn);
+			AvailableProperties = (ArrayList<Property>) in.readObject();
+			Owners = (ArrayList<Owner>) in.readObject();
+			SoldProperties = (HashMap<Owner, Property>) in.readObject();
+		}catch(Exception e){
+			Bukkit.getLogger().severe("[RPProperties] - Could not load properties.xml!" + e);
+		}
+		
+	}
+	
+	void save(){
+		
+		try{
+			FileOutputStream fileOut = new FileOutputStream("/properties.xml");
+			ObjectOutputStream out = new ObjectOutputStream(fileOut);
+			out.writeObject(AvailableProperties);
+			out.writeObject(Owners);
+			out.writeObject(SoldProperties);
+			out.close();
+			fileOut.close();
+		}catch(Exception e){
+			Bukkit.getLogger().severe("[RPProperties] - Could not save properties to properties.xml!" + e);
+		}
 		
 	}
 	
