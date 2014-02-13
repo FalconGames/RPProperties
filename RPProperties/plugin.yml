@@ -1,5 +1,5 @@
 name: RP-Properties
-main: net.swordsofvalor.rpproperties
+main: net.swordsofvalor.rpproperties.RPProperties
 version: 0.1
 author: Nerdic Viking
 website: http://swordsofvalor.net/RPProperties

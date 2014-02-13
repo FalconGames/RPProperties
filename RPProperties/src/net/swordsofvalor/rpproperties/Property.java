@@ -2,6 +2,8 @@ package net.swordsofvalor.rpproperties;
 
 import java.io.Serializable;
 
+import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 public class Property implements Serializable{
@@ -10,6 +12,7 @@ public class Property implements Serializable{
 	String name;
 	int x, y, z, width, height, length;
 	float price;
+	boolean locked;
 	
 	public Property(String name, SelectionArea area, float price){
 		this(area.getX(), area.getY(), area.getZ(), area.getX2(), area.getY2(), area.getZ2(), price);
@@ -65,6 +68,10 @@ public class Property implements Serializable{
 	
 	public String getName(){
 		return name;
+	}
+	
+	public Location getLocation(World world){
+		return new Location(world, x + width / 2, y + 1, z + length / 2);
 	}
 	
 }

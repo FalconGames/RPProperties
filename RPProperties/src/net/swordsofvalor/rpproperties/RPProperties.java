@@ -15,6 +15,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.Permission;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
@@ -32,31 +33,58 @@ public class RPProperties extends JavaPlugin{
 	@Override
 	public void onEnable(){
 		
+		for(Plugin p : Bukkit.getServer().getPluginManager().getPlugins()) Bukkit.getLogger().info(p.getName());
+		
+		Bukkit.getLogger().info("Loading cats into box...");
+		slow();
+		
 		if(!setupEconomy()){
 			Logger.getLogger("Minecraft").severe(String.format("[%s] - Disabled due to no Vault dependency found!", getDescription().getName()));
 			getServer().getPluginManager().disablePlugin(this);
 			return;
 		}
 		
+		Bukkit.getLogger().info("Succesfully pickpocketed midgets...");
+		slow();
+		
 		AvailableProperties = new ArrayList<Property>();
 		SoldProperties = new HashMap<Owner, Property>();
+		
+		Bukkit.getLogger().info("Getting construction crew...");
+		slow();
 		
 		schedule = Bukkit.getServer().getScheduler();
 		updater = new UpdateRunnable(this);
 		schedule.scheduleSyncRepeatingTask(this, updater, 0, 20);
 		
+		Bukkit.getLogger().info("Running around in a hampster wheel...");
+		slow();
+		
 		initProperties();
+		
+		Bukkit.getLogger().info("Construction crew has gone home for the night...");
+		slow();
 		
 		instance = this;
 		
+		Bukkit.getLogger().info("Didn't miss the urinal...");
+		slow();
+		
 		this.getServer().getPluginManager().registerEvents(new InteractListener(), this);
+		
+		Bukkit.getLogger().info("Sh! I'm trying to listen!");
+		slow();
+		Bukkit.getLogger().info("Succesfully started RPProperties!");
+		slow();
 		
 	}
 
 	@Override
 	public void onDisable(){
 		instance = null;
-		schedule.cancelAllTasks();
+		try{
+			schedule.cancelAllTasks();
+		}catch(NullPointerException e){}
 	}
 	
 	@Override
@@ -92,12 +120,16 @@ public class RPProperties extends JavaPlugin{
 	
 	private void initProperties() {
 	
+		AvailableProperties = new ArrayList<>();
+		Owners = new ArrayList<>();
+		SoldProperties = new HashMap<>();
 		try{
 			FileInputStream fileIn = new FileInputStream("properties.xml");
 			ObjectInputStream in = new ObjectInputStream(fileIn);
 			AvailableProperties = (ArrayList<Property>) in.readObject();
 			Owners = (ArrayList<Owner>) in.readObject();
 			SoldProperties = (HashMap<Owner, Property>) in.readObject();
+			in.close();
 		}catch(Exception e){
 			Bukkit.getLogger().severe("[RPProperties] - Could not load properties.xml!" + e);
 		}
@@ -138,6 +170,14 @@ public class RPProperties extends JavaPlugin{
 
 	public Economy getEco() {
 		return eco;
+	}
+	
+	private void slow(){
+		for(int i = 0; i < 100000; i++){
+			double x = Math.sin(i) / 3;
+			x += Math.tan(i) % 45644;
+			x *= 7.12;
+		}
 	}
 	
 }
